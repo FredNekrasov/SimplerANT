@@ -37,7 +37,17 @@ android {
         compose = true
     }
 }
-
+sqldelight {
+    databases {
+        create("ANTDatabase") {
+            packageName = "com.fredprojects.antandroidapp.data.local"
+        }
+    }
+}
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("composeCompiler")
+    metricsDestination = layout.buildDirectory.dir("composeMetrics")
+}
 dependencies {
     implementation(libs.bundles.koin)
     implementation(libs.bundles.network) // Ktor and kotlinx serialization
