@@ -13,7 +13,7 @@ import com.fredprojects.antandroidapp.data.remote.dto.ArticleDto
 import com.fredprojects.antandroidapp.presentation.core.*
 
 /**
- * Shows the details of an [Article] with a close button.
+ * Shows the details of an [ArticleDto] with a close button.
  * The details include: type, title, date, image, and description.
  *  @param article is the article to be shown in the details
  *  @param isShowDialog is a function that is called when the close button is clicked
