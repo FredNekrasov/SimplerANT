@@ -1,7 +1,7 @@
 using ANTWebAPI.Database;
 using ANTWebAPI.Database.Entities;
 using ANTWebAPI.DTOs;
-using ANTWebAPI.mappers;
+using ANTWebAPI.Mappers;
 using Microsoft.EntityFrameworkCore;
 
 namespace ANTWebAPI.Repository;

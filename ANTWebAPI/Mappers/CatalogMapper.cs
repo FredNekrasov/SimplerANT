@@ -1,7 +1,7 @@
 ﻿using ANTWebAPI.Database.Entities;
 using ANTWebAPI.DTOs;
 
-namespace ANTWebAPI.mappers;
+namespace ANTWebAPI.Mappers;
 
 /*
  * Catalog mapper defines extension methods to map CatalogDTO into the Catalog model and vice versa

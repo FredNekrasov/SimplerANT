@@ -1,7 +1,7 @@
 ﻿using ANTWebAPI.Database.Entities;
 using ANTWebAPI.DTOs;
 
-namespace ANTWebAPI.mappers;
+namespace ANTWebAPI.Mappers;
 
 /*
  * Article mapper defines extension methods to map ArticleDTO into the Article model and vice versa

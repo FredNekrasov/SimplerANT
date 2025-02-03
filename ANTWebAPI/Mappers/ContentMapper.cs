@@ -1,7 +1,7 @@
 ﻿using ANTWebAPI.Database.Entities;
 using ANTWebAPI.DTOs;
 
-namespace ANTWebAPI.mappers;
+namespace ANTWebAPI.Mappers;
 
 /*
  * Content mapper defines extension methods to map ContentDTO into the Content model and vice versa
