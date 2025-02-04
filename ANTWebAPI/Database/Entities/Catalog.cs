@@ -10,7 +10,7 @@ namespace ANTWebAPI.Database.Entities;
  */
 public class Catalog
 {
-    public long Id { get; set; }
+    public long Id { get; init; }
     public string Name { get; set; } = string.Empty;
     public ICollection<Article> Articles { get; init; } = null!;
 }
