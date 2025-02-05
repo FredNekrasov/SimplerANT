@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.fredprojects.ant.presentation.core.ANTStrings
+import com.fredprojects.antandroidapp.presentation.core.ANTStrings
 import com.fredprojects.antandroidapp.presentation.screens.*
 import com.fredprojects.antandroidapp.presentation.screens.onePages.*
 import com.fredprojects.antandroidapp.presentation.screens.vm.*

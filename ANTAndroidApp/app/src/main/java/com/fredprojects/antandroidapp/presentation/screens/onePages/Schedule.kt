@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
 import coil.compose.AsyncImage
-import com.fredprojects.ant.presentation.core.ANTStrings
+import com.fredprojects.antandroidapp.presentation.core.ANTStrings
 import com.fredprojects.antandroidapp.presentation.screens.vm.MainArticleState
 
 @Composable

@@ -1,12 +1,8 @@
-package com.fredprojects.ant.presentation.core
+package com.fredprojects.antandroidapp.presentation.core
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 
-/**
- * This class contains all the constants and strings used in the application.
- * Defines the error messages and screen routes.
- */
 object ANTStrings {
     const val MAIN_TITLE = "Храм Александра Невского"
     const val UNKNOWN_ERROR = "Неизвестная ошибка"

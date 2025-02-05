@@ -10,10 +10,7 @@ import kotlinx.coroutines.withContext
 class ArticleDao(
     private val db: ANTDatabase
 ) {
-    /**
-     * Get count of all articles from the database
-     * @return Long
-     */
+    /** Get count of all articles from the database **/
     suspend fun getCountAllArticles(): Long = withContext(Dispatchers.IO) {
         db.articleDaoQueries.getCountAllArticles().executeAsOne()
     }
@@ -33,10 +30,6 @@ class ArticleDao(
     suspend fun upsertArticle(article: ArticleEntity) = withContext(Dispatchers.IO) {
         db.articleDaoQueries.upsertArticle(article)
     }
-    /**
-     * Delete article from the database
-     * @param id is an ID of the article that will be deleted
-     */
     suspend fun deleteArticle(id: Long) = withContext(Dispatchers.IO) {
         db.articleDaoQueries.deleteArticle(id)
     }
