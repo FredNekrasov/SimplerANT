@@ -12,7 +12,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
-import com.fredprojects.ant.presentation.core.*
 import com.fredprojects.antandroidapp.presentation.core.*
 import com.fredprojects.antandroidapp.presentation.screens.vm.MainArticleState
 

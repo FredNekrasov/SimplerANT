@@ -13,7 +13,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.fredprojects.ant.presentation.core.ANTStrings
 import com.fredprojects.antandroidapp.presentation.core.*
 import kotlinx.coroutines.launch
 

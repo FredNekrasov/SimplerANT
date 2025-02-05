@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
-import com.fredprojects.ant.presentation.core.ANTStrings
 import com.fredprojects.antandroidapp.presentation.core.*
 import com.fredprojects.antandroidapp.presentation.core.components.ImageSlider
 import com.fredprojects.antandroidapp.presentation.screens.vm.MainArticleState
