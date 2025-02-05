@@ -68,7 +68,7 @@ public static class ContentAPI
 
     private static async Task<IResult> UpdateContent(ANTDbContext db, long id, [FromBody] ContentDTO? contentDto)
     {
-        if (contentDto == null || id != contentDto.Id || !contentDto.IsDataValid()) return TypedResults.BadRequest();
+        if (contentDto == null || id < 0 || id != contentDto.Id || !contentDto.IsDataValid()) return TypedResults.BadRequest();
         var content = await db.Contents.FirstOrDefaultAsync(e => e.Id == id);
         if (content == null) return TypedResults.NotFound();
         content.ArticleId = contentDto.ArticleId;

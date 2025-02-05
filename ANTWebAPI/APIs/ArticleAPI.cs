@@ -9,6 +9,11 @@ namespace ANTWebAPI.APIs;
 
 public static class ArticleAPI
 {
+    /// <summary>
+    /// Configures the API endpoints for managing articles.
+    /// </summary>
+    /// <param name="articleApi">The RouteGroupBuilder to which the endpoints are mapped.</param>
+    /// <returns>The RouteGroupBuilder with the mapped endpoints.</returns>
     public static RouteGroupBuilder MapArticleAPIEndpoints(this RouteGroupBuilder articleApi)
     {
         articleApi.MapGet("/", GetAllArticles).Produces<List<ArticleDTO>>()
@@ -40,13 +45,13 @@ public static class ArticleAPI
 
     private static async Task<IResult> GetAllArticles(ANTDbContext db)
     {
-        var articles = await db.Articles.AsNoTracking().ToListAsync();
+        var articles = await db.Articles.AsNoTracking().Include(e => e.Catalog).ToListAsync();
         return TypedResults.Ok(articles.Select(e => e.ToDto()));
     }
 
     private static async Task<IResult> GetArticleById(ANTDbContext db, long id)
     {
-        var article = await db.Articles.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
+        var article = await db.Articles.AsNoTracking().Include(e => e.Catalog).FirstOrDefaultAsync(e => e.Id == id);
         return article == null ? TypedResults.NotFound() : TypedResults.Ok(article.ToDto());
     }
 
@@ -61,7 +66,7 @@ public static class ArticleAPI
 
     private static async Task<IResult> UpdateArticle(ANTDbContext db, long id, [FromBody] ArticleDTO? articleDto)
     {
-        if (articleDto == null || id != articleDto.Id || !articleDto.IsDataValid()) return TypedResults.BadRequest();
+        if (articleDto == null || id < 0 || id != articleDto.Id || !articleDto.IsDataValid()) return TypedResults.BadRequest();
         var article = await db.Articles.FirstOrDefaultAsync(e => e.Id == id);
         if (article == null) return TypedResults.NotFound();
         article.CatalogId = articleDto.Catalog.Id;

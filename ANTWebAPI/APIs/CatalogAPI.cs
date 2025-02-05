@@ -9,6 +9,12 @@ namespace ANTWebAPI.APIs;
 
 public static class CatalogAPI
 {
+    /// <summary>
+    /// Maps the catalog-related API endpoints to the provided RouteGroupBuilder.
+    /// Defines endpoints for CRUD operations on catalogs.
+    /// </summary>
+    /// <param name="catalogApi">The RouteGroupBuilder to which the endpoints are mapped.</param>
+    /// <returns>The RouteGroupBuilder with the mapped endpoints.</returns>
     public static RouteGroupBuilder MapCatalogAPIEndpoints(this RouteGroupBuilder catalogApi)
     {
         catalogApi.MapGet("/", GetAllCatalogs).Produces<List<CatalogDTO>>()
@@ -63,7 +69,7 @@ public static class CatalogAPI
 
     private static async Task<IResult> UpdateCatalog(ANTDbContext db, long id, [FromBody] CatalogDTO? catalogDto)
     {
-        if (catalogDto == null || id != catalogDto.Id || !catalogDto.IsDataValid()) return TypedResults.BadRequest();
+        if (catalogDto == null || id < 0 || id != catalogDto.Id || !catalogDto.IsDataValid()) return TypedResults.BadRequest();
         var catalog = await db.Catalogs.FirstOrDefaultAsync(e => e.Id == id);
         if (catalog == null) return TypedResults.NotFound();
         catalog.Name = catalogDto.Name;
