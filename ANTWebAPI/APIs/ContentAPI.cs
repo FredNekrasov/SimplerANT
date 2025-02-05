@@ -9,6 +9,12 @@ namespace ANTWebAPI.APIs;
 
 public static class ContentAPI
 {
+    /// <summary>
+    /// Maps the content-related API endpoints to the provided RouteGroupBuilder.
+    /// Defines endpoints for CRUD operations on contents.
+    /// </summary>
+    /// <param name="contentApi">The RouteGroupBuilder to which the endpoints are mapped.</param>
+    /// <returns>The RouteGroupBuilder with the mapped endpoints.</returns>
     public static RouteGroupBuilder MapContentAPIEndpoints(this RouteGroupBuilder contentApi)
     {
         contentApi.MapGet("/", GetAllContents).Produces<List<ContentDTO>>()
@@ -62,7 +68,7 @@ public static class ContentAPI
 
     private static async Task<IResult> UpdateContent(ANTDbContext db, long id, [FromBody] ContentDTO? contentDto)
     {
-        if (contentDto == null || id != contentDto.Id || !contentDto.IsDataValid()) return TypedResults.BadRequest();
+        if (contentDto == null || id < 0 || id != contentDto.Id || !contentDto.IsDataValid()) return TypedResults.BadRequest();
         var content = await db.Contents.FirstOrDefaultAsync(e => e.Id == id);
         if (content == null) return TypedResults.NotFound();
         content.ArticleId = contentDto.ArticleId;

@@ -3,9 +3,9 @@ using ANTWebAPI.DTOs;
 
 namespace ANTWebAPI.Mappers;
 
-/*
- * Catalog mapper defines extension methods to map CatalogDTO into the Catalog model and vice versa
- */
+/// <summary>
+/// Catalog mapper defines extension methods to map CatalogDTO into the Catalog model and vice versa
+/// </summary>
 public static class CatalogMapper
 {
     public static CatalogDTO ToDto(this Catalog catalog) => new()

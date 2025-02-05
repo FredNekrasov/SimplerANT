@@ -17,15 +17,16 @@ public class ChapterRepository(ANTDbContext dbContext)
         return GetChaptersAsync(articles, contentList);
     }
     
-    /*
-     * GetPagedListByCatalogAsync method is used for getting ChapterDTO List by Catalog id with pagination
-     * 
-     * @param catalogId - Catalog id 
-     * @param pageNumber - Page number is used to get specific page of data
-     * @param pageSize - Page size/number of items
-     * 
-     * @return List<ChapterDTO> - ChapterDTO List
-     */
+    /// <summary>
+    /// Gets a paged list of chapters by catalog ID.
+    /// </summary>
+    /// <param name="catalogId">ID of the catalog.</param>
+    /// <param name="pageNumber">Page number. Defaults to 1.</param>
+    /// <param name="pageSize">Page size or number of items. Defaults to 50.</param>
+    /// <returns>A paged list of chapters.</returns>
+    /// <remarks>
+    /// If catalog ID is not found, this method returns an empty list.
+    /// </remarks>
     public async Task<List<ChapterDTO>> GetPagedListByCatalogAsync(long catalogId, int pageNumber, int pageSize)
     {
         if (!await dbContext.Catalogs.AnyAsync(e => e.Id == catalogId)) return [];
@@ -42,13 +43,11 @@ public class ChapterRepository(ANTDbContext dbContext)
     
     public async Task<int> GetTotalCountAsync() => await dbContext.Articles.CountAsync();
     
-    /**
-     * GetSpecialListAsync method is used for getting main chapters, that is articles count is less than pageSize
-     * 
-     * @param contentList - Content List is used for getting content data (urls, images etc.)
-     * 
-     * @return ChapterDTO List
-     */
+    /// <summary>
+    /// Gets main chapters, that is articles count is less than pageSize.
+    /// </summary>
+    /// <param name="contentList">Content List is used for getting content data (urls, images etc.)</param>
+    /// <returns>ChapterDTO List</returns>
     private async Task<List<ChapterDTO>> GetSpecialListAsync(List<Content> contentList)
     {
         var mainArticles = await dbContext.Articles.AsNoTracking()
@@ -57,6 +56,7 @@ public class ChapterRepository(ANTDbContext dbContext)
             .ToListAsync();
         return GetChaptersAsync(mainArticles, contentList);
     }
+    
     private static List<ChapterDTO> GetChaptersAsync(List<Article> articles, List<Content> contentList)
     {
         List<ChapterDTO> chapterList = [];
