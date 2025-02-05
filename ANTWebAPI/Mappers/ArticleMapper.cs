@@ -3,9 +3,9 @@ using ANTWebAPI.DTOs;
 
 namespace ANTWebAPI.Mappers;
 
-/*
- * Article mapper defines extension methods to map ArticleDTO into the Article model and vice versa
- */
+/// <summary>
+/// Article mapper defines extension methods to map ArticleDTO into the Article model and vice versa
+/// </summary>
 public static class ArticleMapper
 {
     public static ArticleDTO ToDto(this Article article) => new()

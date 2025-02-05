@@ -3,9 +3,9 @@ using ANTWebAPI.DTOs;
 
 namespace ANTWebAPI.Mappers;
 
-/*
- * Content mapper defines extension methods to map ContentDTO into the Content model and vice versa
- */
+/// <summary>
+/// Content mapper defines extension methods to map ContentDTO into the Content model and vice versa
+/// </summary>
 public static class ContentMapper
 {
     public static ContentDTO ToDto(this Content content) => new()

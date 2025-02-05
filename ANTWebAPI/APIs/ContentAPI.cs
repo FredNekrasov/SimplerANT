@@ -9,6 +9,12 @@ namespace ANTWebAPI.APIs;
 
 public static class ContentAPI
 {
+    /// <summary>
+    /// Maps the content-related API endpoints to the provided RouteGroupBuilder.
+    /// Defines endpoints for CRUD operations on contents.
+    /// </summary>
+    /// <param name="contentApi">The RouteGroupBuilder to which the endpoints are mapped.</param>
+    /// <returns>The RouteGroupBuilder with the mapped endpoints.</returns>
     public static RouteGroupBuilder MapContentAPIEndpoints(this RouteGroupBuilder contentApi)
     {
         contentApi.MapGet("/", GetAllContents).Produces<List<ContentDTO>>()

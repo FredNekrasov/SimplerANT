@@ -15,7 +15,9 @@ public class ANTDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly(), t => t.Name.EndsWith("Configuration"));
+        // Applies configurations for all entities from the current assembly.
+        // This allows automatic loading of configurations defined in classes that implement IEntityTypeConfiguration.
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
     public DbSet<Catalog> Catalogs { get; set; }
