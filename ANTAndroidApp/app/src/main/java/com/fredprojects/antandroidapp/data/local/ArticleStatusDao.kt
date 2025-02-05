@@ -17,10 +17,7 @@ class ArticleStatusDao(
     suspend fun getArticleStatusBy(catalogId: Long, pageNumber: Long): ArticleStatusEntity? = withContext(Dispatchers.IO) {
         db.articleStatusDaoQueries.getArticleStatusBy(catalogId, pageNumber).executeAsOneOrNull()
     }
-    /**
-     * Get count of all article status from the database
-     * @return Long
-     */
+    /** Get count of all article status from the database **/
     suspend fun getCountAllArticleStatus(): Long = withContext(Dispatchers.IO) {
         db.articleStatusDaoQueries.getCountAllArticleStatus().executeAsOne()
     }
@@ -31,10 +28,6 @@ class ArticleStatusDao(
     suspend fun upsertArticleStatus(articleStatus: ArticleStatusEntity) = withContext(Dispatchers.IO) {
         db.articleStatusDaoQueries.upsertArticleStatus(articleStatus)
     }
-    /**
-     * Delete article status from the database
-     * @param id is an ID of the article that will be deleted
-     */
     suspend fun deleteArticleStatus(id: Long) = withContext(Dispatchers.IO) {
         db.articleStatusDaoQueries.deleteArticleStatus(id)
     }

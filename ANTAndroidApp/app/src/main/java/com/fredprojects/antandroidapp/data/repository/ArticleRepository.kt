@@ -62,10 +62,7 @@ class ArticleRepository(
         )
         articleStatusDao.upsertArticleStatus(articleStatus.copy(currentDate = LocalDate.now().toString()))
     }
-    /**
-     * hasNewArticles function is used to check if there are new articles in the server
-     * @return Boolean
-     */
+    /** hasNewArticles function is used to check if there are new articles in the server **/
     private suspend fun hasNewArticles(catalogId: Long, pageNumber: Long): Boolean {
         val lastArticleStatus = articleStatusDao.getArticleStatusBy(catalogId, pageNumber) ?: return true
         return !lastArticleStatus.currentDate.contentEquals(LocalDate.now().toString())
