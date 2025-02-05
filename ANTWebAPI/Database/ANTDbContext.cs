@@ -1,5 +1,4 @@
 using System.Reflection;
-using ANTWebAPI.Database.Configurations;
 using ANTWebAPI.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +9,7 @@ public class ANTDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
-        optionsBuilder.UseSqlite("ANTDb.db");
+        optionsBuilder.UseSqlite("Data Source = ANTDb.db");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
