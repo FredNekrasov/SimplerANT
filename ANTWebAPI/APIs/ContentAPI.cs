@@ -93,7 +93,7 @@ public static class ContentAPI
         var content = contentDto.ToModel();
         await db.Contents.AddAsync(content);
         await db.SaveChangesAsync();
-        return TypedResults.Created($"/content/{contentDto.Id}", contentDto);
+        return TypedResults.Created();
     }
 
     /// <summary>

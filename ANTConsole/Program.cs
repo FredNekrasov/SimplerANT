@@ -22,4 +22,4 @@ await DataSender.SendAsync<CatalogDTO>(client, directory + CATALOGS, jsonOptions
 
 await DataSender.SendAsync<ArticleDTO>(client, directory + ARTICLES, jsonOptions, "api/articles/");
 
-await DataSender.SendAsync<CatalogDTO>(client, directory + CONTENTS, jsonOptions, "api/contents/");
+await DataSender.SendAsync<ContentDTO>(client, directory + CONTENTS, jsonOptions, "api/contents/");

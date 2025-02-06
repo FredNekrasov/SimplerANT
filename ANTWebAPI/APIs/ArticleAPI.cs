@@ -91,7 +91,7 @@ public static class ArticleAPI
         var article = articleDto.ToModel();
         await db.Articles.AddAsync(article);
         await db.SaveChangesAsync();
-        return TypedResults.Created($"/article/{article.Id}", article.ToDto());
+        return TypedResults.Created();
     }
 
     /// <summary>
