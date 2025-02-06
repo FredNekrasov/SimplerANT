@@ -25,10 +25,19 @@ public static class ChapterAPI
         return chapterApi;
     }
 
+    /// <summary>
+    /// Retrieves a list of all chapters.
+    /// </summary>
+    /// <param name="chapterRepository">The chapter repository.</param>
+    /// <returns>
+    /// A result object indicating the outcome of the operation.
+    /// <para>200 (OK) if the chapters are successfully retrieved.</para>
+    /// 404 (Not Found) if returns an empty list.
+    /// </returns>
     private static async Task<IResult> GetAllChapters(ChapterRepository chapterRepository)
     {
         var chapterList = await chapterRepository.GetListAsync();
-        return chapterList is [] ? Results.NotFound() : Results.Ok(chapterList);
+        return chapterList is null or [] ? Results.NotFound() : Results.Ok(chapterList);
     }
 
     /// <summary>

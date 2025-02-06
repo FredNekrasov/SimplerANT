@@ -52,6 +52,9 @@ app.Run();
 
 internal record Todo(int Id, string? Title, DateOnly? DueBy = null, bool IsComplete = false);
 
+/// <summary>
+/// Custom JSON serializer context to include custom types in the JSON output of the API.
+/// </summary>
 [JsonSerializable(typeof(Todo[]))]
 [JsonSerializable(typeof(List<CatalogDTO>))]
 [JsonSerializable(typeof(List<ArticleDTO>))]
