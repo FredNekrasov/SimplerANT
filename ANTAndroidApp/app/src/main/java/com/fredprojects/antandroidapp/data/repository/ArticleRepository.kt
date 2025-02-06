@@ -33,7 +33,7 @@ class ArticleRepository(
     suspend fun getList(catalogId: Long, pageNumber: Long) : Result<List<ArticleDto>> = runCatching {
         val articleList = articleDao.getArticlesBy(catalogId, pageNumber).map { it.toDto() }
         if(!hasNewArticles(catalogId, pageNumber)) return Result.success(articleList)
-        val response = client.get("http://ip:port/api/v1/Chapter/$catalogId?pageNumber=$pageNumber").body<ArticleResponse?>()
+        val response = client.get("http://ip:port/api/chapters/$catalogId?pageNumber=$pageNumber").body<ArticleResponse?>()
         return when {
             response == null -> Result.failure(NullPointerException())
             articleDao.getCountAllArticles() == response.totalRecords -> Result.success(articleList)
