@@ -94,7 +94,7 @@ public static class CatalogAPI
         var catalog = catalogDto.ToModel();
         await db.Catalogs.AddAsync(catalog);
         await db.SaveChangesAsync();
-        return TypedResults.Created($"/catalogs/{catalog.Id}", catalog.ToDto());
+        return TypedResults.Created();
     }
 
     /// <summary>
