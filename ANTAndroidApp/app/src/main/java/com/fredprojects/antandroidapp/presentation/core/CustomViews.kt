@@ -19,7 +19,7 @@ import coil.compose.AsyncImage
 
 typealias Action = () -> Unit
 @Composable
-fun FredText(text: String, modifier: Modifier = Modifier, textAlign: TextAlign = TextAlign.Justify) {
+fun ANTText(text: String, modifier: Modifier = Modifier, textAlign: TextAlign = TextAlign.Justify) {
     Text(
         text,
         modifier,
@@ -28,7 +28,7 @@ fun FredText(text: String, modifier: Modifier = Modifier, textAlign: TextAlign =
     )
 }
 @Composable
-fun FredTitle(text: String) {
+fun ANTTitle(text: String) {
     Text(
         text,
         Modifier.fillMaxWidth(),
@@ -38,30 +38,30 @@ fun FredTitle(text: String) {
     )
 }
 @Composable
-fun FredTButton(onClick: Action, text: String, modifier: Modifier = Modifier) {
+fun ANTTextButton(onClick: Action, text: String, modifier: Modifier = Modifier) {
     TextButton(onClick, modifier) {
-        FredText(text, Modifier.wrapContentSize())
+        ANTText(text)
     }
 }
 @Composable
-fun FredIconButton(onClick: Action, icon: ImageVector, modifier: Modifier = Modifier, enabled: Boolean = true) {
+fun ANTIconButton(onClick: Action, icon: ImageVector, modifier: Modifier = Modifier, enabled: Boolean = true) {
     IconButton(onClick, modifier, enabled) {
         Icon(icon, icon.toString())
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FredTopAppBar(openDrawer: Action) {
+fun ANTTopAppBar(openDrawer: Action) {
     TopAppBar(
-        title = { FredText(ANTStrings.MAIN_TITLE) },
+        title = { ANTText(ANTStrings.MAIN_TITLE) },
         Modifier.fillMaxWidth(),
-        navigationIcon = { FredIconButton(openDrawer, Icons.Outlined.Menu) }
+        navigationIcon = { ANTIconButton(openDrawer, Icons.Outlined.Menu) }
     )
 }
 @Composable
-fun FredNavigationDrawerItem(text: String, selected: Boolean, onClick: Action) {
+fun ANTNavigationDrawerItem(text: String, selected: Boolean, onClick: Action) {
     NavigationDrawerItem(
-        label = { FredText(text) },
+        label = { ANTText(text) },
         selected,
         onClick,
         Modifier.fillMaxWidth(),
@@ -70,7 +70,7 @@ fun FredNavigationDrawerItem(text: String, selected: Boolean, onClick: Action) {
     )
 }
 @Composable
-fun FredFloatingActionButton(onClick: Action, icon: ImageVector) {
+fun ANTFloatingActionButton(onClick: Action, icon: ImageVector) {
     FloatingActionButton(
         onClick = onClick,
         modifier = Modifier.border(1.dp, MaterialTheme.colorScheme.primary, MaterialTheme.shapes.medium),
@@ -80,20 +80,17 @@ fun FredFloatingActionButton(onClick: Action, icon: ImageVector) {
     }
 }
 @Composable
-fun FredCard(onClick: Action, uri: String?, title: String, date: String, modifier: Modifier = Modifier) {
+fun ANTCard(onClick: Action, uri: String?, title: String, date: String, modifier: Modifier = Modifier) {
     Card(
         onClick,
-        modifier.wrapContentWidth().border(DividerDefaults.Thickness, MaterialTheme.colorScheme.primary, MaterialTheme.shapes.small).padding(4.dp),
+        modifier.border(DividerDefaults.Thickness, MaterialTheme.colorScheme.primary, MaterialTheme.shapes.small).padding(4.dp),
         shape = MaterialTheme.shapes.small,
         colors = CardDefaults.outlinedCardColors()
     ) {
         if(!uri.isNullOrBlank()) Box(Modifier.fillMaxHeight(0.2f).fillMaxWidth()) {
-            AsyncImage(model = uri.toUri(), contentDescription = title, modifier = Modifier.fillMaxWidth())
+            AsyncImage(model = uri.toUri(), contentDescription = title)
         }
-        Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-            Text(title, Modifier.weight(1f), fontFamily = FontFamily.Serif, textAlign = TextAlign.Center, overflow = TextOverflow.Ellipsis, maxLines = 1)
-            Spacer(Modifier.width(4.dp))
-            FredText(date, modifier = Modifier.wrapContentWidth())
-        }
+        Text(title, Modifier.align(Alignment.CenterHorizontally), fontFamily = FontFamily.Serif, textAlign = TextAlign.Center, overflow = TextOverflow.Ellipsis, maxLines = 1)
+        ANTText(date, Modifier.align(Alignment.End))
     }
 }

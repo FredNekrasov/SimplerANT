@@ -1,12 +1,12 @@
 package com.fredprojects.antandroidapp.di
 
-import com.fredprojects.antandroidapp.data.repository.ArticleRepository
+import com.fredprojects.antandroidapp.data.ArticleRepository
 import com.fredprojects.antandroidapp.presentation.screens.vm.*
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
-val presentationModule get() = module {
+val presentationModule = module {
     viewModel(qualifier<MainArticleVM>()) {
         MainArticleVM(get(qualifier<ArticleRepository>()))
     }

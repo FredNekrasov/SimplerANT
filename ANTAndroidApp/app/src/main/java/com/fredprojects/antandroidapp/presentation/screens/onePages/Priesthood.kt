@@ -19,13 +19,13 @@ fun Priesthood(
     Column(modifier.verticalScroll(rememberScrollState()).padding(8.dp)) {
         state.list.fastForEach {
             if(it.catalog.name != ANTStrings.PRIESTHOOD) return@fastForEach
-            FredTitle(it.catalog.name)
+            ANTTitle(it.catalog.name)
             Spacer(Modifier.height(4.dp))
-            ImageSlider(it, Modifier.fillMaxWidth().aspectRatio(0.58f))
+            ImageSlider(it, Modifier.aspectRatio(0.58f))
             Spacer(Modifier.height(4.dp))
-            FredTitle(it.title)
+            ANTTitle(it.title)
             Spacer(Modifier.height(4.dp))
-            FredText(it.description)
+            ANTText(it.description)
         }
     }
 }

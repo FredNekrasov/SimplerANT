@@ -1,14 +1,8 @@
-package com.fredprojects.antandroidapp.data.mapper
+package com.fredprojects.antandroidapp.data
 
-import com.fredprojects.antandroidapp.data.local.ArticleEntity
-import com.fredprojects.antandroidapp.data.remote.dto.ArticleDto
-import com.fredprojects.antandroidapp.data.remote.dto.CatalogDto
 import kotlinx.serialization.json.Json
 
-/**
- *  Mapper for mapping ArticleDto to ArticleEntity and vice versa
- *  @return ArticleEntity
- */
+/**  Mapper for converting [ArticleDto] to [ArticleEntity] */
 fun ArticleDto.toEntity(catalogId: Long, pageNumber: Long) = ArticleEntity(
     id = id,
     title = title,
@@ -19,7 +13,7 @@ fun ArticleDto.toEntity(catalogId: Long, pageNumber: Long) = ArticleEntity(
     catalogId = catalogId,
     content = Json.encodeToString(content)
 )
-
+/**  Mapper for converting [ArticleEntity] to [ArticleDto] */
 fun ArticleEntity.toDto() = ArticleDto(
     id = id,
     title = title,

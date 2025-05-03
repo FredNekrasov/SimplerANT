@@ -34,7 +34,7 @@ fun MainEntryPoint() {
             ModalDrawerSheet {
                 LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
                     itemsIndexed(navItems) { index, route ->
-                        FredNavigationDrawerItem(
+                        ANTNavigationDrawerItem(
                             text = route,
                             selected = index == selectedItemIndex,
                             onClick = {
@@ -53,8 +53,8 @@ fun MainEntryPoint() {
         val currentRoute = controller.currentBackStackEntryAsState().value?.destination?.route
         Scaffold(
             Modifier.fillMaxSize(),
-            topBar = { FredTopAppBar { scope.launch { drawerState.open() } } },
-            floatingActionButton = { if(currentRoute != navItems[2]) FredFloatingActionButton({ navigateTo(2, navItems[2]) }, Icons.Outlined.DateRange) },
+            topBar = { ANTTopAppBar { scope.launch { drawerState.open() } } },
+            floatingActionButton = { if(currentRoute != navItems[2]) ANTFloatingActionButton({ navigateTo(2, navItems[2]) }, Icons.Outlined.DateRange) },
         ) { padding ->
             ANTNavHost(controller, Modifier.fillMaxSize().padding(padding))
         }

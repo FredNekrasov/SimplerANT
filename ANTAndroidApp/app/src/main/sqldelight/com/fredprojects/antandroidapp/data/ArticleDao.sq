@@ -8,16 +8,16 @@ CREATE TABLE IF NOT EXISTS ArticleEntity(
     catalogId INTEGER NOT NULL,
     content TEXT NOT NULL
 );
-upsertArticle:
+upsert:
 INSERT OR REPLACE
 INTO ArticleEntity(id, title, description, date, articleType, pageNumber, catalogId, content)
 VALUES ?;
 
-getCountAllArticles:
+getCountAll:
 SELECT COUNT(*) FROM ArticleEntity;
 
-getArticlesBy:
+getListBy:
 SELECT * FROM ArticleEntity WHERE catalogId = :catalogId AND pageNumber = :pageNumber;
 
-deleteArticle:
-DELETE FROM ArticleEntity WHERE id = :id;
+deleteBy:
+DELETE FROM ArticleEntity WHERE catalogId = :catalogId AND pageNumber = :pageNumber;

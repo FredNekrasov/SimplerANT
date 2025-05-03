@@ -1,19 +1,16 @@
-CREATE TABLE ArticleStatusEntity (
+CREATE TABLE IF NOT EXISTS ArticleStatusEntity (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     catalogId INTEGER NOT NULL,
     pageNumber INTEGER NOT NULL,
     currentDate TEXT NOT NULL
 );
-upsertArticleStatus:
+upsert:
 INSERT OR REPLACE
 INTO ArticleStatusEntity(id, catalogId, pageNumber, currentDate)
 VALUES ?;
 
-getArticleStatusBy:
+getBy:
 SELECT * FROM ArticleStatusEntity WHERE catalogId = :catalogId AND pageNumber = :page;
 
-getCountAllArticleStatus:
+getCountAll:
 SELECT COUNT(*) FROM ArticleStatusEntity;
-
-deleteArticleStatus:
-DELETE FROM ArticleStatusEntity WHERE id = :id;

@@ -19,8 +19,8 @@ fun Schedule(
     Column(modifier.verticalScroll(rememberScrollState()).padding(8.dp)) {
         state.list.fastForEach {
             if(it.catalog.name != ANTStrings.SCHEDULE) return@fastForEach
-            AsyncImage(model = it.title, contentDescription = it.title, modifier = Modifier.fillMaxWidth())
-            AsyncImage(model = it.description, contentDescription = it.description, modifier = Modifier.fillMaxWidth())
+            AsyncImage(model = it.title, contentDescription = it.title)
+            AsyncImage(model = it.description, contentDescription = it.description)
         }
     }
 }

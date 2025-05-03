@@ -40,7 +40,7 @@ android {
 sqldelight {
     databases {
         create("ANTDatabase") {
-            packageName = "com.fredprojects.antandroidapp.data.local"
+            packageName = "com.fredprojects.antandroidapp.data"
         }
     }
 }

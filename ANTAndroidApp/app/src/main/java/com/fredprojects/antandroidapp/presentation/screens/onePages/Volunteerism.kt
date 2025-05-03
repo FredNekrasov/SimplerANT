@@ -19,13 +19,13 @@ fun Volunteerism(
     Column(modifier.verticalScroll(rememberScrollState()).padding(8.dp)) {
         state.list.fastForEach {
             if(it.catalog.name != ANTStrings.VOLUNTEERISM) return@fastForEach
-            FredTitle(it.catalog.name)
+            ANTTitle(it.catalog.name)
             Spacer(Modifier.height(8.dp))
-            FredTitle(it.title)
+            ANTTitle(it.title)
             Spacer(Modifier.height(4.dp))
-            FredText(it.description)
+            ANTText(it.description)
             Spacer(Modifier.height(8.dp))
-            ImageSlider(it, Modifier.fillMaxWidth().aspectRatio(1.0f))
+            ImageSlider(it, Modifier.aspectRatio(1.0f))
         }
     }
 }
