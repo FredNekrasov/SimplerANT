@@ -19,13 +19,13 @@ fun MainScreen(
     Column(modifier.verticalScroll(rememberScrollState()).padding(8.dp)) {
         state.list.fastForEach {
             if(it.catalog.name != ANTStrings.MAIN) return@fastForEach
-            FredText(it.dateOrBanner, modifier = Modifier.fillMaxWidth())
+            ANTText(it.dateOrBanner)
             Spacer(Modifier.height(4.dp))
-            FredTitle(it.title)
+            ANTTitle(it.title)
             Spacer(Modifier.height(4.dp))
-            FredText(it.description)
+            ANTText(it.description)
             Spacer(Modifier.height(4.dp))
-            ImageSlider(article = it, Modifier.fillMaxWidth().aspectRatio(0.685f))
+            ImageSlider(article = it, Modifier.aspectRatio(0.685f))
         }
     }
 }

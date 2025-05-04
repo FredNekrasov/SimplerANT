@@ -24,16 +24,16 @@ fun Sacraments(
     Column(modifier.padding(8.dp), Arrangement.Center) {
         state.list.fastForEach {
             if(it.catalog.name != ANTStrings.SACRAMENTS) return@fastForEach
-            FredTitle(text = it.title)
+            ANTTitle(text = it.title)
             Spacer(modifier = Modifier.height(8.dp))
-            FredText(text = it.description, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+            ANTText(text = it.description, textAlign = TextAlign.Center)
         }
         Spacer(modifier = Modifier.height(8.dp))
         HorizontalDivider()
         Spacer(modifier = Modifier.height(8.dp))
         state.list.fastForEach { it ->
             if(it.catalog.name != ANTStrings.CONTACTS) return@fastForEach
-            FredTitle(it.title)
+            ANTTitle(it.title)
             Spacer(modifier = Modifier.height(8.dp))
             ContactsCard(contentList = it.content) { uriHandler.openUri(it) }
         }
@@ -46,11 +46,11 @@ fun Sacraments(
  */
 @Composable
 private inline fun ContactsCard(contentList: List<String>, crossinline openSomeApp: (String) -> Unit) {
-    Row(Modifier.fillMaxWidth().wrapContentHeight(), Arrangement.SpaceEvenly, Alignment.CenterVertically) {
-        FredIconButton({ openSomeApp(contentList.getNotNull(2)) }, Icons.Default.Phone)
-        FredTButton({ openSomeApp(contentList.getNotNull(0)) }, ANTStrings.TELEGRAM)
-        FredTButton({ openSomeApp(contentList.getNotNull(1)) }, ANTStrings.VK)
-        FredIconButton({ openSomeApp(contentList.getNotNull(3)) }, Icons.Default.MailOutline)
+    Row(Modifier.fillMaxWidth(), Arrangement.SpaceEvenly, Alignment.CenterVertically) {
+        ANTIconButton({ openSomeApp(contentList.getNotNull(2)) }, Icons.Default.Phone)
+        ANTTextButton({ openSomeApp(contentList.getNotNull(0)) }, ANTStrings.TELEGRAM)
+        ANTTextButton({ openSomeApp(contentList.getNotNull(1)) }, ANTStrings.VK)
+        ANTIconButton({ openSomeApp(contentList.getNotNull(3)) }, Icons.Default.MailOutline)
     }
 }
 private fun List<String>.getNotNull(index: Int): String = getOrNull(index)?.toString() ?: ""

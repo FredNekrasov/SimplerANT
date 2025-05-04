@@ -13,10 +13,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.core.net.toUri
 import coil.compose.AsyncImage
-import com.fredprojects.antandroidapp.data.remote.dto.ArticleDto
+import com.fredprojects.antandroidapp.data.ArticleDto
 
+/**
+ *   Composable function that displays list of images
+ *   @param article object of [ArticleDto]. Contains list of images
+ *   @param modifier
+ *
+ *   When user clicks on one of the images, full screen dialog with that image is shown
+ *   In the dialog, clicking on the image will close the dialog
+ */
 @Composable
-internal fun ImageSlider(
+fun ImageSlider(
     article: ArticleDto,
     modifier: Modifier = Modifier
 ) {
@@ -27,7 +35,7 @@ internal fun ImageSlider(
             AsyncImage(
                 model = photo.toUri(),
                 contentDescription = article.title,
-                Modifier.fillMaxWidth().clickable {
+                Modifier.clickable {
                     url = photo
                     isDialogVisible = true
                 }.padding(start = 2.dp, end = 2.dp),
@@ -35,8 +43,12 @@ internal fun ImageSlider(
         }
     }
     if(isDialogVisible) Dialog(onDismissRequest = { isDialogVisible = false }) {
-        Column(Modifier.fillMaxSize().clickable { isDialogVisible = false }) {
-            AsyncImage(model = url.toUri(), contentDescription = article.title, Modifier.fillMaxSize(), contentScale = ContentScale.FillWidth)
+        Column(Modifier.clickable { isDialogVisible = false }) {
+            AsyncImage(
+                model = url.toUri(),
+                contentDescription = article.title,
+                contentScale = ContentScale.FillWidth
+            )
         }
     }
 }

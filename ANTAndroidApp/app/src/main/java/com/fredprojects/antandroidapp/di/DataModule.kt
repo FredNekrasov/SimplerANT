@@ -3,8 +3,7 @@ package com.fredprojects.antandroidapp.di
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 
-import com.fredprojects.antandroidapp.data.local.*
-import com.fredprojects.antandroidapp.data.repository.ArticleRepository
+import com.fredprojects.antandroidapp.data.*
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
@@ -17,7 +16,7 @@ import kotlinx.serialization.json.Json
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
-val dataModule get() = module {
+val dataModule = module {
     factory<SqlDriver>(qualifier = qualifier<SqlDriver>()) {
         AndroidSqliteDriver(ANTDatabase.Schema, get(), "ANTDatabase.db")
     }

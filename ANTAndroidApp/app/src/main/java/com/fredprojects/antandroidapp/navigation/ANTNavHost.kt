@@ -37,20 +37,20 @@ fun ANTNavHost(
     val mainArticleState = mainVM.articlesSF.collectAsState().value
     NavHost(navController = controller, startDestination = navItems[0]) {
         composable(navItems[0]) { MainScreen(mainArticleState, modifier) }
-        composable(navItems[1]) { ParishLife(parishLifeVM.articlesSF.collectAsState().value, parishLifeVM::getParishLifeArticles, modifier) }
+        composable(navItems[1]) { ParishLife(parishLifeVM.collectSFValue(), parishLifeVM::getParishLifeArticles, modifier) }
         composable(navItems[2]) { Schedule(mainArticleState, modifier) }
         composable(navItems[3]) { ANTProgressIndicator(modifier) }
-        composable(navItems[4]) { YouthClub(youthClubVM.articlesSF.collectAsState().value, youthClubVM::getYouthClubArticles, modifier) }
+        composable(navItems[4]) { YouthClub(youthClubVM.collectSFValue(), youthClubVM::getYouthClubArticles, modifier) }
         composable(navItems[5]) { Priesthood(mainArticleState, modifier) }
-        composable(navItems[6]) { Advices(advicesVM.articlesSF.collectAsState().value, advicesVM::getAdviceArticles, modifier) }
-        composable(navItems[7]) { History(historyVM.articlesSF.collectAsState().value, historyVM::getHistoryArticles, modifier) }
+        composable(navItems[6]) { Advices(advicesVM.collectSFValue(), advicesVM::getAdviceArticles, modifier) }
+        composable(navItems[7]) { History(historyVM.collectSFValue(), historyVM::getHistoryArticles, modifier) }
         composable(navItems[8]) { Sacraments(mainArticleState, modifier) }
         composable(navItems[9]) { ANTProgressIndicator(modifier) }
         composable(navItems[10]) { Volunteerism(mainArticleState, modifier) }
-        composable(navItems[11]) { Stories(storiesVM.articlesSF.collectAsState().value, storiesVM::getStoryArticles, modifier) }
+        composable(navItems[11]) { Stories(storiesVM.collectSFValue(), storiesVM::getStoryArticles, modifier) }
     }
     if(mainArticleState.isLoading) ANTProgressIndicator(modifier)
-    if(mainArticleState.isError) LocalContext.current.displayMessage(ANTStrings.UNKNOWN_ERROR)
+    if(mainArticleState.hasError) LocalContext.current.displayMessage(ANTStrings.UNKNOWN_ERROR)
 }
 @Composable
 private fun ANTProgressIndicator(modifier: Modifier) {
@@ -59,3 +59,5 @@ private fun ANTProgressIndicator(modifier: Modifier) {
     }
 }
 private fun Context.displayMessage(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+@Composable
+private fun ArticleVM.collectSFValue() = articlesSF.collectAsState().value
