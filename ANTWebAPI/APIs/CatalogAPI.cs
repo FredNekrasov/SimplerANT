@@ -18,29 +18,24 @@ public static class CatalogAPI
     public static RouteGroupBuilder MapCatalogAPIEndpoints(this RouteGroupBuilder catalogApi)
     {
         catalogApi.MapGet("/", GetAllCatalogs).Produces<List<CatalogDTO>>()
-            .ProducesProblem(401)
             .Produces(429);
         catalogApi.MapGet("/{id:long}", GetCatalogById).Produces<CatalogDTO>()
             .ProducesProblem(404)
-            .ProducesProblem(401)
             .Produces(429);
         catalogApi.MapPost("/", CreateCatalog).Accepts<CatalogDTO>("application/json")
             .Produces(201)
             .ProducesProblem(400)
-            .ProducesProblem(401)
             .Produces(429);
         catalogApi.MapPut("/{id:long}", UpdateCatalog).Accepts<CatalogDTO>("application/json")
             .Produces(204)
             .ProducesProblem(400)
             .ProducesProblem(404)
             .ProducesProblem(500)
-            .ProducesProblem(401)
             .Produces(429);
         catalogApi.MapDelete("/{id:long}", DeleteCatalog)
             .Produces(204)
             .ProducesProblem(400)
             .ProducesProblem(404)
-            .ProducesProblem(401)
             .Produces(429);
         return catalogApi;
     }
@@ -89,8 +84,7 @@ public static class CatalogAPI
     /// </returns>
     private static async Task<IResult> CreateCatalog(ANTDbContext db, [FromBody] CatalogDTO? catalogDto)
     {
-        if (catalogDto == null || !catalogDto.IsDataValid()) return TypedResults.BadRequest();
-        if (await db.Catalogs.AnyAsync(e => e.Name == catalogDto.Name)) return TypedResults.BadRequest();
+        if (catalogDto == null || !catalogDto.IsDataValid() || await db.Catalogs.AnyAsync(e => e.Name == catalogDto.Name)) return TypedResults.BadRequest();
         var catalog = catalogDto.ToModel();
         await db.Catalogs.AddAsync(catalog);
         await db.SaveChangesAsync();
@@ -137,7 +131,6 @@ public static class CatalogAPI
     /// <para>204 (No Content) if the catalog is successfully deleted.</para>
     /// 400 (Bad Request) if the <paramref name="id"/> is invalid or the catalog has dependencies.
     /// <para>404 (Not Found) if the catalog is not found.</para>
-    /// 401 (Unauthorized) if the user is not authenticated.
     /// <para>429 (Too Many Requests) if the rate limit is exceeded.</para>
     /// </returns>
     private static async Task<IResult> DeleteCatalog(ANTDbContext db, long id)

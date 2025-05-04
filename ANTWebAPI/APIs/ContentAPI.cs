@@ -18,29 +18,24 @@ public static class ContentAPI
     public static RouteGroupBuilder MapContentAPIEndpoints(this RouteGroupBuilder contentApi)
     {
         contentApi.MapGet("/", GetAllContents).Produces<List<ContentDTO>>()
-            .ProducesProblem(401)
             .Produces(429);
         contentApi.MapGet("/{id:long}", GetContentById).Produces<ContentDTO>()
             .ProducesProblem(404)
-            .ProducesProblem(401)
             .Produces(429);
         contentApi.MapPost("/", CreateContent).Accepts<ContentDTO>("application/json")
             .Produces(201)
             .ProducesProblem(400)
-            .ProducesProblem(401)
             .Produces(429);
         contentApi.MapPut("/{id:long}", UpdateContent).Accepts<ContentDTO>("application/json")
             .Produces(204)
             .ProducesProblem(400)
             .ProducesProblem(404)
             .ProducesProblem(500)
-            .ProducesProblem(401)
             .Produces(429);
         contentApi.MapDelete("/{id:long}", DeleteContent)
             .Produces(204)
             .ProducesProblem(400)
             .ProducesProblem(404)
-            .ProducesProblem(401)
             .Produces(429);
         return contentApi;
     }
@@ -137,7 +132,6 @@ public static class ContentAPI
     /// <para>204 (No Content) if the content is successfully deleted.</para>
     /// 400 (Bad Request) if the <paramref name="id"/> is invalid.
     /// <para>404 (Not Found) if the content is not found.</para>
-    /// 401 (Unauthorized) if the user is not authenticated.
     /// <para>429 (Too Many Requests) if the rate limit is exceeded.</para>
     /// </returns>
     private static async Task<IResult> DeleteContent(ANTDbContext db, long id)

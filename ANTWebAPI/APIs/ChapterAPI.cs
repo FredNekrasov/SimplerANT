@@ -16,11 +16,9 @@ public static class ChapterAPI
     {
         chapterApi.MapGet("/", GetAllChapters).Produces<List<ChapterDTO>>()
             .ProducesProblem(404)
-            .ProducesProblem(401)
             .Produces(429);
         chapterApi.MapGet("/{catalogId:long}", GetPagedChapters).Produces<PagedResponse<ChapterDTO>>()
             .ProducesProblem(404)
-            .ProducesProblem(401)
             .Produces(429);
         return chapterApi;
     }
