@@ -2,7 +2,7 @@ using System.Text.Json;
 
 namespace ANTConsole;
 
-public static class JsonParser<T>
+public static class JsonParser
 {
     /// <summary>
     /// Parses JSON data from a specified file and returns a list of objects of type T.
@@ -11,13 +11,13 @@ public static class JsonParser<T>
     /// <param name="filePath">The path to the JSON file to be parsed.</param>
     /// <param name="jsonSerializerOptions">Options to customize the JSON deserialization process.</param>
     /// <returns>A list of objects of type T, or null if parsing fails.</returns>
-    public static List<T>? GetParsedListOrNull(string filePath, JsonSerializerOptions jsonSerializerOptions)
+    public static List<T>? GetParsedListOrNull<T>(string filePath, JsonSerializerOptions jsonSerializerOptions)
     {
         try
         {
-            var file = File.Exists(filePath) ? File.ReadAllText(filePath) : string.Empty;
-            var catalogList = JsonSerializer.Deserialize<List<T>>(file, jsonSerializerOptions);
-            return catalogList;
+            var fileContent = File.Exists(filePath) ? File.ReadAllText(filePath) : string.Empty;
+            var parsedList = JsonSerializer.Deserialize<List<T>>(fileContent, jsonSerializerOptions);
+            return parsedList;
         }
         catch (Exception e)
         {

@@ -16,7 +16,7 @@ public static class DataSender
     /// <typeparam name="T">The type of objects in the list being sent.</typeparam>
     public static async Task SendAsync<T>(HttpClient httpClient, string filePath, JsonSerializerOptions options, string endpoint)
     {
-        var dtoList = JsonParser<T>.GetParsedListOrNull(filePath, options);
+        var dtoList = JsonParser.GetParsedListOrNull<T>(filePath, options);
         if (dtoList is null or [] || dtoList.Any(dto => dto == null))
         {
             Console.WriteLine($"{typeof(T).Name} list is empty or null.");
@@ -25,7 +25,7 @@ public static class DataSender
 
         foreach (var dto in dtoList)
         {
-            Console.WriteLine(dto.ToString());
+            Console.WriteLine(dto);
             var response = await httpClient.PostAsync(endpoint, GetStringContent(dto));
             Console.WriteLine(response.StatusCode);
         }
@@ -35,7 +35,7 @@ public static class DataSender
     /// </summary>
     /// <param name="obj">The object to serialize into JSON.</param>
     /// <returns>A StringContent object containing the serialized JSON.</returns>
-    private static StringContent GetStringContent(object obj)
+    private static StringContent GetStringContent<T>(T obj)
     {
         var json = JsonSerializer.Serialize(obj);
         return new StringContent(json, Encoding.UTF8, "application/json");
