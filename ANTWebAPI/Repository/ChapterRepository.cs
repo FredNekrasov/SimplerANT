@@ -13,68 +13,83 @@ public class ChapterRepository(ANTDbContext dbContext)
         var articles = await dbContext.Articles.AsNoTracking()
             .Include(e => e.Catalog)
             .ToListAsync();
-        var contentList = await dbContext.Contents.AsNoTracking().ToListAsync();
-        return GetChaptersAsync(articles, contentList);
+        return await GetChaptersAsync(articles);
     }
     
     /// <summary>
-    /// Gets a paged list of chapters by catalog ID.
+    /// Gets a list of chapters by catalog ID, with optional pagination.
     /// </summary>
-    /// <param name="catalogId">ID of the catalog.</param>
-    /// <param name="pageNumber">Page number. Defaults to 1.</param>
-    /// <param name="pageSize">Page size or number of items. Defaults to 50.</param>
-    /// <returns>A paged list of chapters.</returns>
+    /// <param name="catalogId">The ID of the catalog to get chapters from.</param>
+    /// <param name="pageNumber">The page number to retrieve. Defaults to 1.</param>
+    /// <param name="pageSize">The page size or number of items. Defaults to 50.</param>
+    /// <returns>A list of chapters.</returns>
     /// <remarks>
-    /// If catalog ID is not found, this method returns an empty list.
+    /// If the catalog is not found, this method returns an empty list.
+    /// If the catalog ID is 1, this method returns the special list of chapters.
     /// </remarks>
     public async Task<List<ChapterDTO>> GetPagedListByCatalogAsync(long catalogId, int pageNumber, int pageSize)
     {
         if (!await dbContext.Catalogs.AnyAsync(e => e.Id == catalogId)) return [];
-        var contentList = await dbContext.Contents.AsNoTracking().ToListAsync();
-        if (catalogId == 1) return await GetSpecialListAsync(contentList);
+        if (catalogId == 1) return await GetSpecialListAsync();
         var articles = await dbContext.Articles.AsNoTracking()
             .Where(e => e.CatalogId == catalogId)
             .Include(e => e.Catalog)
             .ToListAsync();
-        var chapterList = GetChaptersAsync(articles, contentList);
+        var chapterList = await GetChaptersAsync(articles);
         int startIndex = (pageNumber - 1) * pageSize, endIndex = startIndex + pageSize;
         return articles.Count < pageSize ? chapterList : chapterList.Take(startIndex..endIndex).ToList();
     }
     
-    public async Task<int> GetTotalCountAsync() => await dbContext.Articles.CountAsync();
+    public Task<int> GetTotalCountAsync() => dbContext.Articles.CountAsync();
+    private readonly long[] excludedCatalogIds = [2, 5, 7, 8, 13];
     
     /// <summary>
-    /// Gets main chapters, that is articles count is less than pageSize.
+    /// Retrieves a special list of chapters, excluding those from specific catalog IDs.
     /// </summary>
-    /// <param name="contentList">Content List is used for getting content data (urls, images etc.)</param>
-    /// <returns>ChapterDTO List</returns>
-    private async Task<List<ChapterDTO>> GetSpecialListAsync(List<Content> contentList)
+    /// <returns>A list of ChapterDTO objects, representing the chapters from articles
+    /// not associated with the excluded catalog IDs.</returns>
+    /// <remarks>
+    /// This method filters articles based on their CatalogId, excluding those that
+    /// belong to the predefined excluded catalog IDs, and returns the corresponding chapters.
+    /// </remarks>
+    private async Task<List<ChapterDTO>> GetSpecialListAsync()
     {
         var mainArticles = await dbContext.Articles.AsNoTracking()
-            .Where(e => e.CatalogId != 2 && e.CatalogId != 5 && e.CatalogId != 7 && e.CatalogId != 8 && e.CatalogId != 13)
+            .Where(e => !excludedCatalogIds.Contains(e.CatalogId))
             .Include(e => e.Catalog)
             .ToListAsync();
-        return GetChaptersAsync(mainArticles, contentList);
+        return await GetChaptersAsync(mainArticles);
     }
     
-    private static List<ChapterDTO> GetChaptersAsync(List<Article> articles, List<Content> contentList)
+    /// <summary>
+    /// Retrieves a list of chapters, given a list of articles.
+    /// </summary>
+    /// <param name="articles">The list of articles.</param>
+    /// <returns>A list of ChapterDTO objects, representing the chapters from the given articles.</returns>
+    /// <remarks>
+    /// This method groups the contents of the given articles by article ID and
+    /// uses this grouped content to create a ChapterDTO for each article.
+    /// </remarks>
+    private async Task<List<ChapterDTO>> GetChaptersAsync(List<Article> articles)
     {
-        List<ChapterDTO> chapterList = [];
-        chapterList.AddRange(
-            from article in articles
-            let content = contentList.Where(content => content.ArticleId == article.Id)
-                .Select(content => content.Data)
-                .ToList()
-            select new ChapterDTO
-            {
-                Id = article.Id,
-                Catalog = article.Catalog.ToDto(),
-                Title = article.Title,
-                Description = article.Description,
-                DateOrBanner = article.DateOrBanner,
-                Content = content
-            }
-        );
-        return chapterList;
+        var articleIds = articles.Select(a => a.Id).ToList();
+        var groupedContent = await dbContext.Contents.AsNoTracking()
+            .Where(c => articleIds.Contains(c.ArticleId))
+            .GroupBy(e => e.ArticleId)
+            .ToDictionaryAsync(g => g.Key, g => g.Select(c => c.Data).ToList());
+        var listChapters = articles.Select(article => 
+            CreateChapter(article, groupedContent.TryGetValue(article.Id, out var cList) ? cList : [])
+        ).ToList();
+        return listChapters;
     }
+
+    private static ChapterDTO CreateChapter(Article article, List<string> contentList) => new()
+    {
+        Id = article.Id,
+        Catalog = article.Catalog.ToDto(),
+        Title = article.Title,
+        Description = article.Description,
+        DateOrBanner = article.DateOrBanner,
+        Content = contentList
+    };
 }

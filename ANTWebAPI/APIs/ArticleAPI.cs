@@ -17,28 +17,23 @@ public static class ArticleAPI
     public static RouteGroupBuilder MapArticleAPIEndpoints(this RouteGroupBuilder articleApi)
     {
         articleApi.MapGet("/", GetAllArticles).Produces<List<ArticleDTO>>()
-            .ProducesProblem(401)
             .Produces(429);
         articleApi.MapGet("/{id:long}", GetArticleById).Produces<ArticleDTO>()
             .ProducesProblem(404)
-            .ProducesProblem(401)
             .Produces(429);
         articleApi.MapPost("/", CreateArticle).Accepts<ArticleDTO>("application/json")
             .Produces(201)
             .ProducesProblem(400)
-            .ProducesProblem(401)
             .Produces(429);
         articleApi.MapPut("/{id:long}", UpdateArticle).Accepts<ArticleDTO>("application/json")
             .Produces(204)
             .ProducesProblem(400)
             .ProducesProblem(404)
             .ProducesProblem(500)
-            .ProducesProblem(401)
             .Produces(429);
         articleApi.MapDelete("/{id:long}", DeleteArticle)
             .Produces(204)
             .ProducesProblem(404)
-            .ProducesProblem(401)
             .Produces(429);
         return articleApi;
     }
@@ -137,7 +132,6 @@ public static class ArticleAPI
     /// <para>204 (No Content) if the article is successfully deleted.</para>
     /// 400 (Bad Request) if the article has dependencies or id is invalid.
     /// <para>404 (Not Found) if the article is not found.</para>
-    /// 401 (Unauthorized) if the user is not authenticated.
     /// <para>429 (Too Many Requests) if the rate limit is exceeded.</para>
     /// </returns>
     private static async Task<IResult> DeleteArticle(ANTDbContext db, long id)
